@@ -1,0 +1,19 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/clientsInfo?useUnicode=yes&characterEncoding=UTF8&useSSL=false&serverTimezone=Europe/Saratov
+    username: root
+    password: test
+
+rest_http_port: 8080
+
+server:
+  port: ${rest_http_port}
+  servlet:
+    context-path: /api
+
+is_clear_database: true
