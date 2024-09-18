@@ -2,9 +2,15 @@ package org.example.clientsinfo.service;
 
 import jakarta.transaction.Transactional;
 import org.example.clientsinfo.dto.request.ClientDtoRequest;
+import org.example.clientsinfo.dto.request.EmailDtoRequest;
+import org.example.clientsinfo.dto.request.PhoneDtoRequest;
 import org.example.clientsinfo.dto.response.ClientDtoResponse;
 import org.example.clientsinfo.entities.Client;
+import org.example.clientsinfo.entities.Email;
+import org.example.clientsinfo.entities.Phone;
 import org.example.clientsinfo.repos.ClientRepository;
+import org.example.clientsinfo.repos.EmailRepository;
+import org.example.clientsinfo.repos.PhoneRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -14,9 +20,13 @@ import java.util.*;
 public class ClientService {
 
     private final ClientRepository clientRepository;
+    private final PhoneRepository phoneRepository;
+    private final EmailRepository emailRepository;
 
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository, PhoneRepository phoneRepository, EmailRepository emailRepository) {
         this.clientRepository = clientRepository;
+        this.phoneRepository = phoneRepository;
+        this.emailRepository = emailRepository;
     }
 
     public List<ClientDtoResponse> findAllClients() {
@@ -40,5 +50,31 @@ public class ClientService {
         }
         client = new Client(request);
         return new ClientDtoResponse(clientRepository.save(client));
+    }
+
+    public ClientDtoResponse addClientPhone(PhoneDtoRequest request) {
+        Phone phone;
+        Optional<Phone> phoneFromRepos = Optional.ofNullable(phoneRepository.findByPhone(request.getPhone()));
+        if (phoneFromRepos.isPresent()) {
+            phone = phoneFromRepos.get();
+            return new ClientDtoResponse(phone.getClient());
+        } else {
+            Client client = clientRepository.findClientById(request.getClientId());
+            phone = new Phone(client, request.getPhone());
+            return new ClientDtoResponse(phoneRepository.save(phone).getClient());
+        }
+    }
+
+    public ClientDtoResponse addClientEmail(EmailDtoRequest request) {
+        Email email;
+        Optional<Email> emailFromRepos = Optional.ofNullable(emailRepository.findByEmail(request.getEmail()));
+        if (emailFromRepos.isPresent()) {
+            email = emailFromRepos.get();
+            return new ClientDtoResponse(email.getClient());
+        } else {
+            Client client = clientRepository.findClientById(request.getClientId());
+            email = new Email(client, request.getEmail());
+            return new ClientDtoResponse(emailRepository.save(email).getClient());
+        }
     }
 }

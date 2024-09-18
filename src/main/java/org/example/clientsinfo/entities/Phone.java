@@ -37,6 +37,11 @@ public class Phone {
         this.phone = phone;
     }
 
+    public Phone(Client client, String phone) {
+        this.client = client;
+        this.phone = phone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

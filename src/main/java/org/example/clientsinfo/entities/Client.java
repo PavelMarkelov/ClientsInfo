@@ -62,6 +62,7 @@ public class Client {
         return getPhoneNumbersAsStrings().equals(phoneNumbers) && getEmailListAsStrings().equals(emailList);
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

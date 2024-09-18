@@ -38,6 +38,11 @@ public class Email {
         this.email = email;
     }
 
+    public Email(Client client, String email) {
+        this.client = client;
+        this.email = email;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

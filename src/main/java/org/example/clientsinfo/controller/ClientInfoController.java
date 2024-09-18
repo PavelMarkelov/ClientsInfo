@@ -1,6 +1,8 @@
 package org.example.clientsinfo.controller;
 
 import org.example.clientsinfo.dto.request.ClientDtoRequest;
+import org.example.clientsinfo.dto.request.EmailDtoRequest;
+import org.example.clientsinfo.dto.request.PhoneDtoRequest;
 import org.example.clientsinfo.dto.response.ClientDtoResponse;
 import org.example.clientsinfo.service.ClientService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +32,12 @@ public class ClientInfoController {
     }
 
     @PostMapping("/clientPhone")
-    public ClientDtoResponse addClientPhone(@RequestBody ClientDtoRequest request) {
-        return clientService.addClient(request);
+    public ClientDtoResponse addClientPhone(@RequestBody PhoneDtoRequest request) {
+        return clientService.addClientPhone(request);
+    }
+
+    @PostMapping("/clientEmail")
+    public ClientDtoResponse addClientEmail(@RequestBody EmailDtoRequest request) {
+        return clientService.addClientEmail(request);
     }
 }
