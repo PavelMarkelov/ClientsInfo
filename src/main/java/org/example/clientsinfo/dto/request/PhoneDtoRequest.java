@@ -1,22 +1,16 @@
 package org.example.clientsinfo.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PhoneDtoRequest {
 
-    @Getter
-    @Setter
     private long clientId;
-
-    @Getter
-    @Setter
     private String phone;
-
-    public PhoneDtoRequest(long clientId, String phone) {
-        this.clientId = clientId;
-        this.phone = phone;
-    }
 
     public PhoneDtoRequest() {
     }

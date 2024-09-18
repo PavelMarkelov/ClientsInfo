@@ -4,7 +4,10 @@ import jakarta.transaction.Transactional;
 import org.example.clientsinfo.dto.request.ClientDtoRequest;
 import org.example.clientsinfo.dto.request.EmailDtoRequest;
 import org.example.clientsinfo.dto.request.PhoneDtoRequest;
+import org.example.clientsinfo.dto.response.ClientContactsResponse;
 import org.example.clientsinfo.dto.response.ClientDtoResponse;
+import org.example.clientsinfo.dto.response.ClientEmailListResponse;
+import org.example.clientsinfo.dto.response.ClientPhonesResponse;
 import org.example.clientsinfo.entities.Client;
 import org.example.clientsinfo.entities.Email;
 import org.example.clientsinfo.entities.Phone;
@@ -76,5 +79,45 @@ public class ClientService {
             email = new Email(client, request.getEmail());
             return new ClientDtoResponse(emailRepository.save(email).getClient());
         }
+    }
+
+    public ClientDtoResponse findClient(long id) {
+        Client client;
+        Optional<Client> clientFromRepos = Optional.ofNullable(clientRepository.findClientById(id));
+        if (clientFromRepos.isPresent()) {
+            client = clientFromRepos.get();
+            return new ClientDtoResponse(client);
+        }
+        return new ClientDtoResponse();
+    }
+
+    public ClientPhonesResponse findClientPhones(long id) {
+        Client client;
+        Optional<Client> clientFromRepos = Optional.ofNullable(clientRepository.findClientById(id));
+        if (clientFromRepos.isPresent()) {
+            client = clientFromRepos.get();
+            return new ClientPhonesResponse(id, client.getPhoneNumbersAsStrings());
+        }
+        return new ClientPhonesResponse();
+    }
+
+    public ClientEmailListResponse findClientEmailList(long id) {
+        Client client;
+        Optional<Client> clientFromRepos = Optional.ofNullable(clientRepository.findClientById(id));
+        if (clientFromRepos.isPresent()) {
+            client = clientFromRepos.get();
+            return new ClientEmailListResponse(id, client.getEmailListAsStrings());
+        }
+        return new ClientEmailListResponse();
+    }
+
+    public ClientContactsResponse findClientContacts(long id) {
+        Client client;
+        Optional<Client> clientFromRepos = Optional.ofNullable(clientRepository.findClientById(id));
+        if (clientFromRepos.isPresent()) {
+            client = clientFromRepos.get();
+            return new ClientContactsResponse(id, client.getPhoneNumbersAsStrings(), client.getEmailListAsStrings());
+        }
+        return new ClientContactsResponse();
     }
 }
