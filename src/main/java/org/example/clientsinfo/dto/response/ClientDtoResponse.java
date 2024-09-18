@@ -26,16 +26,16 @@ public class ClientDtoResponse {
 
     @Getter
     @Setter
-    private List<Phone> phoneNumbers;
+    private List<String> phoneNumbers;
 
     @Getter
     @Setter
-    private List<Email> emailList;
+    private List<String> emailList;
 
     public ClientDtoResponse() {
     }
 
-    public ClientDtoResponse(long id, String fistName, String lastName, List<Phone> phoneNumbers, List<Email> emailList) {
+    public ClientDtoResponse(long id, String fistName, String lastName, List<String> phoneNumbers, List<String> emailList) {
         this.id = id;
         this.fistName = fistName;
         this.lastName = lastName;
@@ -47,7 +47,7 @@ public class ClientDtoResponse {
         this.id = client.getId();
         this.fistName = client.getFirstName();
         this.lastName = client.getLastName();
-        this.phoneNumbers = client.getPhoneNumbers();
-        this.emailList = client.getEmailList();
+        this.phoneNumbers = client.getPhoneNumbersAsStrings();
+        this.emailList = client.getEmailListAsStrings();
     }
 }

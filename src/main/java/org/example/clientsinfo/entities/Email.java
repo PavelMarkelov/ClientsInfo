@@ -23,6 +23,13 @@ public class Email {
     @Getter
     private String email;
 
+    @Getter
+    @Setter
+    @JoinColumn(name = "client_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonView(View.Id.class)
+    private Client client;
+
     public Email() {
     }
 

@@ -11,14 +11,16 @@ CREATE TABLE client (
 
 CREATE TABLE phone (
                        id BIGINT NOT NULL,
-                       phone VARCHAR(50),
+                       phone VARCHAR(50) unique not null,
+                       client_id BIGINT NOT NULL,
                        PRIMARY KEY (id),
-                       FOREIGN KEY (id) REFERENCES client (id) ON DELETE CASCADE
+                       FOREIGN KEY (client_id) REFERENCES client (id) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE email (
                        id BIGINT NOT NULL,
-                       email VARCHAR(50),
+                       email VARCHAR(50)  unique not null,
+                       client_id BIGINT NOT NULL,
                        PRIMARY KEY (id),
-                       FOREIGN KEY (id) REFERENCES client (id) ON DELETE CASCADE
+                       FOREIGN KEY (client_id) REFERENCES client (id) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.clientsinfo.dto.request.ClientDtoRequest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,9 +38,28 @@ public class Client {
     @OneToMany(mappedBy = "email", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Getter
     @Setter
-    private List<Email> emailList= new ArrayList<>();
+    private List<Email> emailList = new ArrayList<>();
 
     public Client() {
+    }
+
+    public Client(ClientDtoRequest request) {
+        firstName = request.getFistName();
+        lastName = request.getLastName();
+    }
+
+    public List<String> getPhoneNumbersAsStrings() {
+        return phoneNumbers.stream().map(Phone::getPhone).sorted().toList();
+    }
+
+    public List<String> getEmailListAsStrings() {
+        return emailList.stream().map(Email::getEmail).sorted().toList();
+    }
+
+    public boolean equalsByContacts(List<String> phoneNumbers, List<String> emailList) {
+        Collections.sort(phoneNumbers);
+        Collections.sort(emailList);
+        return getPhoneNumbersAsStrings().equals(phoneNumbers) && getEmailListAsStrings().equals(emailList);
     }
 
     @Override
@@ -56,10 +77,6 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+        return "Client{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + '}';
     }
 }
