@@ -1,7 +1,6 @@
 package org.example.clientsinfo.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +13,6 @@ public class Email {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(View.Id.class)
     @Getter
     @Setter
     private Long id;
@@ -27,7 +25,6 @@ public class Email {
     @Setter
     @JoinColumn(name = "client_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonView(View.Id.class)
     private Client client;
 
     public Email() {
@@ -35,6 +32,10 @@ public class Email {
 
     public Email(Long id, String email) {
         this.id = id;
+        this.email = email;
+    }
+
+    public Email(String email) {
         this.email = email;
     }
 
@@ -47,13 +48,13 @@ public class Email {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Email email = (Email) o;
-        return Objects.equals(id, email.id);
+        Email email1 = (Email) o;
+        return Objects.equals(email, email1.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(email);
     }
 
     @Override

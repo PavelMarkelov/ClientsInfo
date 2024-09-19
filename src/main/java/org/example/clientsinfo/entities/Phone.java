@@ -1,6 +1,5 @@
 package org.example.clientsinfo.entities;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +12,6 @@ public class Phone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(View.Id.class)
     @Getter
     @Setter
     private Long id;
@@ -24,9 +22,8 @@ public class Phone {
 
     @Getter
     @Setter
-    @JoinColumn(name = "client_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonView(View.Id.class)
+    @JoinColumn(name = "client_id")
     private Client client;
 
     public Phone() {
@@ -34,6 +31,10 @@ public class Phone {
 
     public Phone(Long id, String phone) {
         this.id = id;
+        this.phone = phone;
+    }
+
+    public Phone(String phone) {
         this.phone = phone;
     }
 
@@ -46,13 +47,13 @@ public class Phone {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Phone phone = (Phone) o;
-        return Objects.equals(id, phone.id);
+        Phone phone1 = (Phone) o;
+        return Objects.equals(phone, phone1.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(phone);
     }
 
     @Override

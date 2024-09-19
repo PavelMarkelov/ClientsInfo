@@ -17,6 +17,7 @@ import org.example.clientsinfo.repos.PhoneRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -52,7 +53,14 @@ public class ClientService {
             }
         }
         client = new Client(request);
-        return new ClientDtoResponse(clientRepository.save(client));
+
+        Client finalClient = client;
+        Set<Phone> phones = request.getPhoneNumbers().stream().map(s -> new Phone(finalClient, s)).collect(Collectors.toSet());
+        finalClient.setPhoneNumbers(phones);
+        Set<Email> emailList = request.getEmailList().stream().map(s -> new Email(finalClient, s)).collect(Collectors.toSet());
+        finalClient.setEmailList(emailList);
+
+        return new ClientDtoResponse(clientRepository.save(finalClient));
     }
 
     public ClientDtoResponse addClientPhone(PhoneDtoRequest request) {

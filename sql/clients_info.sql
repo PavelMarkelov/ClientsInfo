@@ -10,7 +10,7 @@ CREATE TABLE client (
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE phone (
-                       id BIGINT NOT NULL,
+                       id BIGINT NOT NULL AUTO_INCREMENT,
                        phone VARCHAR(50) unique not null,
                        client_id BIGINT NOT NULL,
                        PRIMARY KEY (id),
@@ -18,7 +18,7 @@ CREATE TABLE phone (
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE email (
-                       id BIGINT NOT NULL,
+                       id BIGINT NOT NULL AUTO_INCREMENT,
                        email VARCHAR(50)  unique not null,
                        client_id BIGINT NOT NULL,
                        PRIMARY KEY (id),

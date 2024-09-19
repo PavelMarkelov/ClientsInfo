@@ -8,10 +8,7 @@ import org.example.clientsinfo.dto.response.ClientDtoResponse;
 import org.example.clientsinfo.dto.response.ClientEmailListResponse;
 import org.example.clientsinfo.dto.response.ClientPhonesResponse;
 import org.example.clientsinfo.service.ClientService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,23 +26,23 @@ public class ClientInfoController {
         return clientService.findAllClients();
     }
 
-    @GetMapping("/client")
-    public ClientDtoResponse getClient(long id) {
+    @GetMapping("/client/{id}")
+    public ClientDtoResponse getClient(@PathVariable("id") long id) {
         return clientService.findClient(id);
     }
 
-    @GetMapping("/clientPhones")
-    public ClientPhonesResponse getClientPhones(long id) {
+    @GetMapping("/clientPhones/{id}")
+    public ClientPhonesResponse getClientPhones(@PathVariable("id") long id) {
         return clientService.findClientPhones(id);
     }
 
-    @GetMapping("/clientEmailList")
-    public ClientEmailListResponse getClientEmailList(long id) {
+    @GetMapping("/clientEmailList/{id}")
+    public ClientEmailListResponse getClientEmailList(@PathVariable("id") long id) {
         return clientService.findClientEmailList(id);
     }
 
-    @GetMapping("/clientContacts")
-    public ClientContactsResponse getClientContacts(long id) {
+    @GetMapping("/clientContacts/{id}")
+    public ClientContactsResponse getClientContacts(@PathVariable("id") long id) {
         return clientService.findClientContacts(id);
     }
 

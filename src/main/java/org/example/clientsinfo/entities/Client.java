@@ -1,15 +1,11 @@
 package org.example.clientsinfo.entities;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.clientsinfo.dto.request.ClientDtoRequest;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "client")
@@ -17,28 +13,29 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(View.Id.class)
     @Getter
     @Setter
-    private Long id;
+    private long id;
 
     @Getter
     @Setter
+    @Column(name = "first_name")
     private String firstName;
 
     @Getter
     @Setter
+    @Column(name = "last_name")
     private String lastName;
 
-    @OneToMany(mappedBy = "phone", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Getter
     @Setter
-    private List<Phone> phoneNumbers = new ArrayList<>();
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Phone> phoneNumbers = new HashSet<>();
 
-    @OneToMany(mappedBy = "email", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Getter
     @Setter
-    private List<Email> emailList = new ArrayList<>();
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Email> emailList = new HashSet<>();
 
     public Client() {
     }
@@ -79,5 +76,13 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + '}';
+    }
+
+    public void addPhone(Phone phone) {
+        phoneNumbers.add(phone);
+    }
+
+    public void addEmail(Email email) {
+        emailList.add(email);
     }
 }
